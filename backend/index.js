@@ -8,7 +8,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use("/backend-api/api/v1", rootRouter);
+app.use("/backend-api/v1", rootRouter);
 
 app.use((err, req, res, next) => {
   res.status(500).json({
