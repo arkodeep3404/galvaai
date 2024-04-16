@@ -80,7 +80,7 @@ router.post("/signup", async (req, res) => {
   });
 
   await transporter.sendMail({
-    from: '"NexaWings" <nexawingsenterprises@gmail.com>',
+    from: '"Galva AI" <no-reply@galva.ai>',
     to: req.body.email,
     subject: "Email Verification",
     html: `<p> Hi ${req.body.firstName}. Please verify your email. </p> 
