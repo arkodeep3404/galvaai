@@ -83,8 +83,16 @@ router.post("/signup", async (req, res) => {
     from: '"Galva AI" <no-reply@galva.ai>',
     to: req.body.email,
     subject: "Email Verification",
-    html: `<p> Hi ${req.body.firstName}. Please verify your email. </p> 
-    <a href = "${process.env.BACKEND_URL}v1/user/verify/${uid}"> Click Here </a>`,
+    html: `<p>Hallo ${req.body.firstName},<br>
+    Herzlich willkommen bei GALVA.AI! Wir freuen uns, Sie als neues Mitglied begrüßen zu dürfen.<br><br>
+    Um Ihre Registrierung abzuschließen und alle Funktionen von GALVA.AI nutzen zu können, bitten wir
+    Sie, Ihre E-Mail-Adresse zu bestätigen. Klicken Sie dazu einfach auf den folgenden Link:<br><br>
+    <a href = "${process.env.BACKEND_URL}v1/user/verify/${uid}"> Verification Link </a><br><br>
+    Nach Bestätigung Ihrer E-Mail erhalten Sie vollen Zugriff auf alle Funktionen unserer Plattform.<br><br>
+    Bei Fragen stehen wir Ihnen gerne zur Verfügung.<br><br><br>
+    Freundliche Grüße,<br><br>
+    Patrick Boehm<br>
+    Founder GALVA.AI<br><br></p>`,
   });
 
   res.status(200).json({
