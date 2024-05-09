@@ -42,6 +42,30 @@ router.get("/me", authMiddleware, async (req, res) => {
   });
 });
 
+router.get("/all", async (req, res) => {
+  const users = await User.find({});
+
+  res.status(200).json({
+    users,
+  });
+});
+
+router.post("/delete", authMiddleware, async (req, res) => {
+  const userId = req.userId;
+
+  if (!userId) {
+    return res.status(403).json({
+      message: "not logged in",
+    });
+  }
+
+  const user = await User.deleteOne(userId);
+
+  res.status(200).json({
+    message: "user deleted",
+  });
+});
+
 const signupBody = zod.object({
   email: zod.string().email(),
   firstName: zod.string(),
