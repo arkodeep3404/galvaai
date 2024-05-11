@@ -50,7 +50,7 @@ router.get("/all", async (req, res) => {
   });
 });
 
-router.post("/delete", authMiddleware, async (req, res) => {
+router.delete("/delete", authMiddleware, async (req, res) => {
   const userId = req.userId;
 
   if (!userId) {
