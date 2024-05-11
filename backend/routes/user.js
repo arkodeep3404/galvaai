@@ -53,17 +53,23 @@ router.get("/all", async (req, res) => {
 router.delete("/delete", authMiddleware, async (req, res) => {
   const userId = req.userId;
 
-  if (!userId) {
-    return res.status(403).json({
-      message: "not logged in",
+  const user = await User.findOne({
+    _id: userId,
+  });
+
+  if (user) {
+    await User.deleteOne({
+      _id: userId,
+    });
+
+    res.status(200).json({
+      message: "user deleted",
+    });
+  } else {
+    res.status(400).json({
+      message: "please signin and try again",
     });
   }
-
-  const user = await User.deleteOne(userId);
-
-  res.status(200).json({
-    message: "user deleted",
-  });
 });
 
 const signupBody = zod.object({
