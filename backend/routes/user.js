@@ -44,11 +44,40 @@ router.get("/me", authMiddleware, async (req, res) => {
 
 router.get("/all", async (req, res) => {
   const users = await User.find({});
-
   res.status(200).json({
     users,
   });
 });
+
+
+router.get("/display_user", async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const count = parseInt(req.query.count) || 10;
+
+  try {
+    const skip = (page - 1) * count;
+
+    const users = await User.find({}).skip(skip).limit(count);
+
+    const totalUsers = await User.countDocuments({});
+
+    res.status(200).json({
+      users,
+      pagination: {
+        totalUsers,
+        currentPage: page,
+        totalPages: Math.ceil(totalUsers / count),
+      },
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "An error occurred while fetching users.",
+    });
+  }
+});
+
+
+
 
 router.delete("/delete", authMiddleware, async (req, res) => {
   const userId = req.userId;
