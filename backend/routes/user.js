@@ -147,7 +147,7 @@ router.post("/signup", async (req, res) => {
   await transporter.sendMail({
     from: '"Galva AI" <no-reply@galva.ai>',
     to: req.body.email,
-    subject: "Email Verification",
+    subject: "Email Verification - Galva.AI",
     html: `<p>Hallo ${req.body.firstName},<br>
     Herzlich willkommen bei GALVA.AI! Wir freuen uns, Sie als neues Mitglied begrüßen zu dürfen.<br><br>
     Um Ihre Registrierung abzuschließen und alle Funktionen von GALVA.AI nutzen zu können, bitten wir
