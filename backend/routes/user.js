@@ -78,14 +78,20 @@ router.get("/display_user", async (req, res) => {
 
 
 
-
 router.delete("/delete", authMiddleware, async (req, res) => {
   const userId = req.userId;
+  const userIdsToDelete = req.body.userIds;
+  if (Array.isArray(userIdsToDelete) && userIdsToDelete.length > 0) {
+    const result = await User.deleteMany({ _id: { $in: userIdsToDelete } });
 
+    return res.status(200).json({
+      message: `${result.deletedCount} user(s) deleted`,
+    });
+  }
+  
   const user = await User.findOne({
     _id: userId,
   });
-
   if (user) {
     await User.deleteOne({
       _id: userId,
