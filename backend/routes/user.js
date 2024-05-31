@@ -60,9 +60,14 @@ router.get("/display_user", async (req, res) => {
     const users = await User.find({}).skip(skip).limit(count);
 
     const totalUsers = await User.countDocuments({});
-
+    const usersWithoutPasswords = users.map(user => {
+      const userObj = user.toObject();
+      const { password, ...rest } = userObj;
+      return rest;
+    });
+    let Users = usersWithoutPasswords;
     res.status(200).json({
-      users,
+      Users,
       pagination: {
         totalUsers,
         currentPage: page,
